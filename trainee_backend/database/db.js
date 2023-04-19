@@ -1,3 +1,4 @@
+require("dotenv").config();
 module.exports = {
-  db: 'mongodb://mongodb:27017/reactdb',
+  db: process.env.hosturl,
 }

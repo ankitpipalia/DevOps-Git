@@ -1,11 +1,10 @@
 FROM node:12-alpine
 
-RUN mkdir /backend
-COPY . /backend
 WORKDIR /backend
-
+COPY package.json .
 RUN npm install
 RUN npm install nodemon --global
+COPY . .
 
 EXPOSE 5500
 
