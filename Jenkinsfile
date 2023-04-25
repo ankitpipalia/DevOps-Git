@@ -9,4 +9,8 @@ pipeline {
     }
 
   }
+  environment {
+    hosturl = 'mongodb://localhost:27017/reactdb'
+    PORT = '4000'
+  }
 }
