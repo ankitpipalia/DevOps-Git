@@ -1,10 +1,10 @@
 pipeline {
   agent any
   stages {
-    stage('') {
+    stage('build') {
       agent any
       steps {
-        sh 'docker build -t mern-stack .'
+        sh 'docker-compose up --build'
       }
     }
 
