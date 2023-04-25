@@ -4,7 +4,8 @@ pipeline {
     stage('build') {
       agent any
       steps {
-        sh 'docker-compose up --build'
+        sh '''cp trainee_backend/.env.example trainee_backend/.env
+docker-compose up --build'''
       }
     }
 
