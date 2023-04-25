@@ -2,7 +2,7 @@ let express = require('express');
 let mongoose = require('mongoose');
 let cors = require('cors');
 let bodyParser = require('body-parser');
-
+require("dotenv").config();
 // Express Route
 const studentRoute = require('./routes/student.route')
 
