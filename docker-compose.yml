@@ -5,6 +5,8 @@ services:
     image: mongo
     container_name: mongodb
     restart: always
+    networks:
+      - backend-network
     ports:
       - 27017
   
@@ -16,6 +18,9 @@ services:
     restart: always
     ports:
       - 4000
+    networks:
+      - frontend-network
+      - backend-network
     depends_on:
       - mongodb
   
@@ -25,7 +30,13 @@ services:
       context: ./trainee_frontend/
     container_name: frontend
     restart: always 
+    networks:
+      - frontend-network
     ports:
       - 80:80
     depends_on:
       - backend
+
+networks:
+  frontend-network:
+  backend-network:
