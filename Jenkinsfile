@@ -40,6 +40,10 @@ pipeline {
     always {
       sh 'docker logout'
     }
+    cleanup{
+        deleteDir()
+        cleanWs()
+    }
 
   }
 }
