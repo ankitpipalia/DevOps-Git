@@ -31,6 +31,10 @@ pipeline {
     }
 
   }
+  environment {
+    DOCKERHUB_CREDENTIALS_PSW = 'ankit@2002'
+    DOCKERHUB_CREDENTIALS_USR = 'babodesi'
+  }
   post {
     always {
       sh 'docker logout'
