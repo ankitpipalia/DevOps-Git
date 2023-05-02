@@ -26,8 +26,10 @@ pipeline {
 
     stage('Push') {
       steps {
-        sh 'docker push babodesi/mern-stack_frontend:latest'
-        sh 'docker push babodesi/mern-stack_backend:latest'
+        sh 'docker tag mern-stack_frontend babodesi/mern-frontend:v$(date +%Y%m%d%H)'
+        sh 'docker tag mern-stack_frontend babodesi/mern-backend:v$(date +%Y%m%d%H)'
+        sh 'docker push babodesi/mern-frontend:v$(date +%Y%m%d%H)'
+        sh 'docker push babodesi/mern-backend:v$(date +%Y%m%d%H)'
       }
     }
 
@@ -38,13 +40,8 @@ pipeline {
   }
   post {
     always {
+      cleanWs()
       sh 'docker logout'
     }
-
-    cleanup {
-      deleteDir()
-      cleanWs()
-    }
-
   }
 }

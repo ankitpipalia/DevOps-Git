@@ -1,4 +1,4 @@
-version: "3"
+version: "3.9"
 services:
   
   mongodb:
@@ -15,6 +15,7 @@ services:
       dockerfile: Dockerfile
       context: ./trainee_backend/
     container_name: backend
+    image: mern-backend:v1
     restart: always
     ports:
       - 4000
@@ -28,6 +29,7 @@ services:
     build:   
       dockerfile: Dockerfile
       context: ./trainee_frontend/
+    image: mern-frontend:v1
     container_name: frontend
     restart: always 
     networks:
