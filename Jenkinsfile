@@ -14,7 +14,7 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'docker build -t babodesi/nodeapp_test:latest .'
+        sh 'docker-compose build'
       }
     }
 
