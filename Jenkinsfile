@@ -26,7 +26,8 @@ pipeline {
 
     stage('Push') {
       steps {
-        sh 'docker push babodesi/nodeapp_test:latest'
+        sh 'docker push babodesi/mern-stack_frontend:latest'
+        sh 'docker push babodesi/mern-stack_backend:latest'
       }
     }
 
