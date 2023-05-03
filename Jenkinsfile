@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('gitclone') {
       steps {
-        git 'https://github.com/ankitpipalia/MERN-Stack.git'
+        git 'git@github.com:ankitpipalia/MERN-Stack.git'
       }
     }
 
@@ -43,5 +43,6 @@ pipeline {
       cleanWs()
       sh 'docker logout'
     }
+
   }
 }
