@@ -54,4 +54,4 @@ npm test
    - 27017: MongoDB
 
  - Make sure these ports are available and not being used by other processes on your system. You can update the port mappings in the docker-compose.yml file if needed.
- - That's it! You now have the MERN stack application running in Docker containers using Docker Compose. You can access the application in your web browser and start using its features. Happy coding!
+ - That's it! You now have the MERN stack application running in Docker containers using Docker Compose. You can access the application in your web browser and start using its features. Happy c
