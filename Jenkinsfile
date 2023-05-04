@@ -27,13 +27,11 @@ pipeline {
     }
     
     stage('Execute SonarQube Report') {
-        
     steps {
         sh '/home/docker/workspace/sonar-scanner/bin/sonar-scanner   -Dsonar.projectKey=Node_todo   -Dsonar.sources=.   -Dsonar.host.url=http://docker.pipalia.tech:9000   -Dsonar.token=sqp_9db6875134414339983c8ea095e665fd56d9acb6 -Dsonar.login=admin -Dsonar.password=password -Dsonar.projectBaseDir=/home/docker/workspace/MERN-Stack'
-    }    
+      }    
+    }
 
-      }
-    
     stage('Build') {
       steps {
         sh 'docker-compose -f docker-compose.prod.yml down'
@@ -49,29 +47,34 @@ pipeline {
 
     stage('Push-Frontend') {
       steps {
-        sh 'docker tag mern-stack_frontend babodesi/mern-frontend:v${BUILD_NUMBER}'
-        sh 'docker tag mern-stack_frontend babodesi/mern-frontend:latest'
+        sh 'docker tag mern-stack_frontend:v1 babodesi/mern-frontend:v${BUILD_NUMBER}'
+        sh 'docker tag mern-stack_frontend:v1 babodesi/mern-frontend:latest'
         sh 'docker push babodesi/mern-frontend:v${BUILD_NUMBER}'
         sh 'docker push babodesi/mern-frontend:latest'
+        sh 'docker rmi mern-stack_frontend:v1'
+        sh 'docker rmi mern-stack_frontend:latest'
+        sh 'docker rmi mern-stack_frontend:v${BUILD_NUMBER}'
       }
     }
 
     stage('Push-Backend') {
       steps {
-        sh 'docker tag mern-stack_backend babodesi/mern-backend:v${BUILD_NUMBER}'
-        sh 'docker tag mern-stack_backend babodesi/mern-backend:latest'
+        sh 'docker tag mern-stack_backend:v1 babodesi/mern-backend:v${BUILD_NUMBER}'
+        sh 'docker tag mern-stack_backend:v1 babodesi/mern-backend:latest'
         sh 'docker push babodesi/mern-backend:v${BUILD_NUMBER}'
         sh 'docker push babodesi/mern-backend:latest'
-        sh 'docker rmi babodesi/mern-backend:v${BUILD_NUMBER}'
-        sh 'docker rmi babodesi/mern-frontend:v${BUILD_NUMBER}'
+        sh 'docker rmi mern-stack_backend:v1'
+        sh 'docker rmi mern-stack_backend:latest'
+        sh 'docker rmi mern-stack_backend:v${BUILD_NUMBER}'
       }
     }
 
     stage('CD'){
       steps {
         sh 'docker-compose down'
-        sh 'docker rm -f $(docker ps -aq)'
+        sh 'Image=$(docker ps -aq | wc -l ) && echo "$Image" && if [ $Image -gt 0 ]; then docker rm -fv $(docker ps -aq); fi;'
         sh 'docker-compose -f docker-compose.prod.yml up -d'
+        sh 'docker system prune -a --force'
       }
     }
 
