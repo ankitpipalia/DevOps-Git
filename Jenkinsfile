@@ -47,25 +47,25 @@ pipeline {
 
     stage('Push-Frontend') {
       steps {
-        sh 'docker tag mern-stack_frontend:v1 babodesi/mern-frontend:v${BUILD_NUMBER}'
-        sh 'docker tag mern-stack_frontend:v1 babodesi/mern-frontend:latest'
+        sh 'docker tag mern-frontend:v1 babodesi/mern-frontend:v${BUILD_NUMBER}'
+        sh 'docker tag mern-frontend:v1 babodesi/mern-frontend:latest'
         sh 'docker push babodesi/mern-frontend:v${BUILD_NUMBER}'
         sh 'docker push babodesi/mern-frontend:latest'
-        sh 'docker rmi mern-stack_frontend:v1'
-        sh 'docker rmi mern-stack_frontend:latest'
-        sh 'docker rmi mern-stack_frontend:v${BUILD_NUMBER}'
+        sh 'docker rmi mern-frontend:v1'
+        sh 'docker rmi babodesi/mern-frontend:latest'
+        sh 'docker rmi babodesi/mern-frontend:v${BUILD_NUMBER}'
       }
     }
 
     stage('Push-Backend') {
       steps {
-        sh 'docker tag mern-stack_backend:v1 babodesi/mern-backend:v${BUILD_NUMBER}'
-        sh 'docker tag mern-stack_backend:v1 babodesi/mern-backend:latest'
+        sh 'docker tag mern-backend:v1 babodesi/mern-backend:v${BUILD_NUMBER}'
+        sh 'docker tag mern-backend:v1 babodesi/mern-backend:latest'
         sh 'docker push babodesi/mern-backend:v${BUILD_NUMBER}'
         sh 'docker push babodesi/mern-backend:latest'
-        sh 'docker rmi mern-stack_backend:v1'
-        sh 'docker rmi mern-stack_backend:latest'
-        sh 'docker rmi mern-stack_backend:v${BUILD_NUMBER}'
+        sh 'docker rmi mern-backend:v1'
+        sh 'docker rmi babodesi/mern-backend:latest'
+        sh 'docker rmi babodesi/mern-backend:v${BUILD_NUMBER}'
       }
     }
 
