@@ -22,7 +22,7 @@ function App() {
             <Container>
               <Navbar.Brand>
                 <Link to={'/create-student'} className="nav-link">
-                  CRUD Operations
+                  Meet Amrutiya
                 </Link>
               </Navbar.Brand>
 
