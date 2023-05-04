@@ -8,13 +8,14 @@ pipeline {
   stages {
     stage('gitclone') {
       steps {
-        git 'git@github.com:ankitpipalia/MERN-Stack.git'
+        git 'https://github.com/ankitpipalia/MERN-Stack.git'
       }
     }
 
     stage('Build') {
       steps {
-        sh 'docker-compose build'
+        sh 'docker-compose -f docker-compose.prod.yml down'
+        sh 'docker-compose -f docker-compose.build.yml build'
       }
     }
 
@@ -24,13 +25,31 @@ pipeline {
       }
     }
 
-    stage('Push') {
+    stage('Push-Frontend') {
       steps {
-        sh 'docker tag mern-stack_frontend babodesi/mern-frontend:v$(date +%Y%m%d%H)'
-        sh 'docker tag mern-stack_frontend babodesi/mern-backend:v$(date +%Y%m%d%H)'
-        sh 'docker push babodesi/mern-frontend:v$(date +%Y%m%d%H)'
-        sh 'docker push babodesi/mern-backend:v$(date +%Y%m%d%H)'
-        sh 
+        sh 'docker tag mern-stack_frontend babodesi/mern-frontend:v${BUILD_NUMBER}'
+        sh 'docker tag mern-stack_frontend babodesi/mern-frontend:latest'
+        sh 'docker push babodesi/mern-frontend:v${BUILD_NUMBER}'
+        sh 'docker push babodesi/mern-frontend:latest'
+      }
+    }
+
+    stage('Push-Backend') {
+      steps {
+        sh 'docker tag mern-stack_backend babodesi/mern-backend:v${BUILD_NUMBER}'
+        sh 'docker tag mern-stack_backend babodesi/mern-backend:latest'
+        sh 'docker push babodesi/mern-backend:v${BUILD_NUMBER}'
+        sh 'docker push babodesi/mern-backend:latest'
+        sh 'docker rmi babodesi/mern-backend:v${BUILD_NUMBER}'
+        sh 'docker rmi babodesi/mern-frontend:v${BUILD_NUMBER}'
+      }
+    }
+
+    stage('CD'){
+      steps {
+
+        sh 'docker-compose -f docker-compose.prod.yml up -d'
+
       }
     }
 
@@ -38,6 +57,7 @@ pipeline {
   environment {
     DOCKERHUB_CREDENTIALS_PSW = 'ankit@2002'
     DOCKERHUB_CREDENTIALS_USR = 'babodesi'
+      
   }
   post {
     always {
