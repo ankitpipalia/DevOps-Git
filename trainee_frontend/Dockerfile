@@ -1,8 +1,7 @@
 FROM node:12-alpine as build
 
-RUN mkdir /fronend
-COPY . /frontend
 WORKDIR /frontend
+COPY . /frontend
 
 RUN npm install
 
