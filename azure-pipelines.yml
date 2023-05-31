@@ -5,9 +5,9 @@ resources:
 - repo: self
 
 variables:
-  dockerHubRepository: 'babodesi/gujarat'
+  dockerHubRepository: 'babodesi/mern'
   dockerHubUsername: 'babodesi'
-  dockerHubPassword: $(DOCKERHUB_PASSWORD)
+  dockerHubPassword: 'ankit@2002'
 
 stages:
 - stage: Build
@@ -19,26 +19,20 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build Front-End image
       inputs:
-        command: 'buildAndPush'
-        dockerfile: '$(Build.SourcesDirectory)/trainee_frontend/Dockerfile'
-        tags:
-          $(Build.BuildNumber)
-          latest
         containerRegistry: 'dockerHub'
-        repository: '$(dockerHubRepository)'
+        repository: 'babodesi/gujarat'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/trainee_frontend/Dockerfile'
+        buildContext: 'docker build . -t babodesi/mern-frontend'
+        tags: '$(Build.BuildNumber) latest'
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build Back-End image
       inputs:
-        command: 'buildAndPush'
-        dockerfile: '$(Build.SourcesDirectory)/trainee_backend/Dockerfile'
-        tags:
-          $(Build.BuildNumber)
-          latest
         containerRegistry: 'dockerHub'
         repository: '$(dockerHubRepository)'
-
-      env:
-        DOCKERHUB_USERNAME: 'babodesi'
-        DOCKERHUB_PASSWORD: $(dockerHubPassword)
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/trainee_backend/Dockerfile'
+        buildContext: 'docker build . -t mern-backend'
+        tags: '$(Build.BuildNumber) latest'
