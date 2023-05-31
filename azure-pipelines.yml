@@ -40,5 +40,5 @@ stages:
         repository: '$(dockerHubRepository)'
 
       env:
-        DOCKERHUB_USERNAME: $(dockerHubUsername)
+        DOCKERHUB_USERNAME: 'babodesi'
         DOCKERHUB_PASSWORD: $(dockerHubPassword)
