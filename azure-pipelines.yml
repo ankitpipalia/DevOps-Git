@@ -1,23 +1,37 @@
 trigger:
 - master
 
-jobs:
-- job: frontend
-  steps:
-  - task: Docker@2
-    displayName: Frontend
-    inputs:
-      command: buildAndPush
-      Dockerfile: $(Build.SourcesDirectory)/trainee_frontend/Dockerfile
-      repository: babodesi/mern-frontend
-      tags: latest
+resources:
+- repo: self
 
-- job: backend
-  steps:
-  - task: Docker@2
-    displayName: Backend
-    inputs:
-      command: buildAndPush
-      Dockerfile: $(Build.SourcesDirectory)/trainee_backend/Dockerfile
-      repository: babodesi/mern-frontend
-      tags: latest
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerHub'
+        command: 'login'
+    - task: Docker@2
+      displayName: Build Front-End image
+      inputs:
+        containerRegistry: 'dockerHub'
+        repository: 'babodesi/mern-frontend'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/trainee_frontend/Dockerfile'
+        buildContext: 'docker build . -t babodesi/mern-frontend'
+        tags: '$(Build.BuildNumber) latest'
+    - task: Docker@2
+      displayName: Build Back-End image
+      inputs:
+        containerRegistry: 'dockerHub'
+        repository: 'babodesi/mern-backend'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/trainee_backend/Dockerfile'
+        buildContext: 'docker build . -t mern-backend'
+        tags: '$(Build.BuildNumber) latest'
