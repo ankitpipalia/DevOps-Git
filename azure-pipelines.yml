@@ -18,20 +18,16 @@ stages:
         containerRegistry: 'DockerHub'
         command: 'login'
     - task: Docker@2
-      displayName: Build Front-End image
       inputs:
-        containerRegistry: 'dockerHub'
-        repository: 'babodesi'
+        containerRegistry: 'DockerHub'
+        repository: 'mern'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/trainee_frontend/Dockerfile'
-        buildContext: 'docker build . -t babodesi/mern-frontend'
+        Dockerfile: '**/trainee_backend'
         tags: '$(Build.BuildNumber) latest'
     - task: Docker@2
-      displayName: Build Back-End image
       inputs:
-        containerRegistry: 'dockerHub'
-        repository: 'babodesi'
+        containerRegistry: 'DockerHub'
+        repository: 'mern'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/trainee_backend/Dockerfile'
-        buildContext: 'docker build . -t babodesi/mern-backend'
+        Dockerfile: '**/trainee_frontendend'
         tags: '$(Build.BuildNumber) latest'
