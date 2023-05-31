@@ -9,6 +9,7 @@ jobs:
         command: 'login'
 
 - job: frontend
+dependsOn: login
   steps:
   - task: Docker@2
     displayName: Frontend Docker image
@@ -19,7 +20,7 @@ jobs:
       tags: $(Build.BuildNumber)
 
 - job: backend
-  dependsOn: build
+  dependsOn: frontend
   steps:
   - task: Docker@2
     displayName: Backend Docker image
