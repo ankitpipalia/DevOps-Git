@@ -1,28 +1,44 @@
 trigger:
-  branches:
-    include:
-      - main
+- master
 
-pool:
-  vmImage: 'ubuntu-latest'
+resources:
+- repo: self
 
 variables:
-  imageName: 'gujarat'
-  dockerHubRepository: 'babodesi'
-  dockerHubUsername: $(DOCKERHUB_USERNAME)
+  dockerHubRepository: 'babodesi/gujarat'
+  dockerHubUsername: 'babodesi'
   dockerHubPassword: $(DOCKERHUB_PASSWORD)
 
-steps:
-- task: Docker@2
-  displayName: 'Build and push Docker image'
-  inputs:
-    command: 'buildAndPush'
-    containerRegistry: 'dockerHub'
-    repository: '$(dockerHubRepository)'
-    dockerfile: 'Dockerfile'
-    tags: |
-      $(Build.BuildNumber)
-      latest
-  env:
-    DOCKERHUB_USERNAME: $(dockerHubUsername)
-    DOCKERHUB_PASSWORD: $(dockerHubPassword)
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: 'buildAndPush'
+        dockerfile: '$(Build.SourcesDirectory)/trainee_frontend/Dockerfile'
+        tags:
+          $(Build.BuildNumber)
+          latest
+        containerRegistry: 'dockerHub'
+        repository: '$(dockerHubRepository)'
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: 'buildAndPush'
+        dockerfile: '$(Build.SourcesDirectory)/trainee_backend/Dockerfile'
+        tags:
+          $(Build.BuildNumber)
+          latest
+        containerRegistry: 'dockerHub'
+        repository: '$(dockerHubRepository)'
+
+      env:
+        DOCKERHUB_USERNAME: $(dockerHubUsername)
+        DOCKERHUB_PASSWORD: $(dockerHubPassword)
