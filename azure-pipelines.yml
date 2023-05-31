@@ -15,7 +15,7 @@ jobs:
     displayName: Frontend Docker image
     inputs:
       command: buildAndPush
-      Dockerfile: ./trainee_frontend/Dockerfile
+      Dockerfile: '$(Build.SourcesDirectory)/trainee_frontend/Dockerfile'
       repository: $(Build.RepositoryName)
       tags: $(Build.BuildNumber)
 
@@ -26,6 +26,6 @@ jobs:
     displayName: Backend Docker image
     inputs:
       command: buildAndPush
-      Dockerfile: ./trainee_backend/Dockerfile
+      Dockerfile: '$(Build.SourcesDirectory)/trainee_backend/Dockerfile'
       repository: $(Build.RepositoryName)
       tags: $(Build.BuildNumber)
