@@ -29,5 +29,5 @@ stages:
         containerRegistry: 'DockerHub'
         repository: 'mern'
         command: 'buildAndPush'
-        Dockerfile: '**/trainee_frontendend'
+        Dockerfile: '**/trainee_frontend'
         tags: '$(Build.BuildNumber) latest'
