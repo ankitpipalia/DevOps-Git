@@ -21,7 +21,7 @@ stages:
       displayName: Build Front-End image
       inputs:
         containerRegistry: 'dockerHub'
-        repository: 'babodesi/mern-frontend'
+        repository: 'babodesi'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/trainee_frontend/Dockerfile'
         buildContext: 'docker build . -t babodesi/mern-frontend'
@@ -30,8 +30,8 @@ stages:
       displayName: Build Back-End image
       inputs:
         containerRegistry: 'dockerHub'
-        repository: 'babodesi/mern-backend'
+        repository: 'babodesi'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/trainee_backend/Dockerfile'
-        buildContext: 'docker build . -t mern-backend'
+        buildContext: 'docker build . -t babodesi/mern-backend'
         tags: '$(Build.BuildNumber) latest'
