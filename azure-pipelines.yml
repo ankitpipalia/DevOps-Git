@@ -11,9 +11,9 @@ jobs:
       Dockerfile: $(Build.SourcesDirectory)/trainee_frontend/Dockerfile
       repository: babodesi/mern-frontend
       tags: latest
-      env:
-            DOCKER_USERNAME: babodesi
-            DOCKER_PASSWORD: ankit@2002
+    env:
+          DOCKER_USERNAME: babodesi
+          DOCKER_PASSWORD: ankit@2002
 
 - job: backend
   dependsOn: Build
@@ -25,6 +25,6 @@ jobs:
       Dockerfile: $(Build.SourcesDirectory)/trainee_backend/Dockerfile
       repository: babodesi/mern-frontend
       tags: latest
-      env:
-            DOCKER_USERNAME: babodesi
-            DOCKER_PASSWORD: ankit@2002
+    env:
+          DOCKER_USERNAME: babodesi
+          DOCKER_PASSWORD: ankit@2002
