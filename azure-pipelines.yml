@@ -1,33 +1,30 @@
 trigger:
 - master
-
-resources:
-- repo: self
-
-stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
+jobs:
+- job: login
+  steps:
     - task: Docker@2
       inputs:
         containerRegistry: 'DockerHub'
         command: 'login'
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'DockerHub'
-        repository: 'mern-backend'
-        command: 'buildAndPush'
-        Dockerfile: '**/trainee_backend'
-        tags: '$(Build.BuildNumber)'
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'DockerHub'
-        repository: 'mern-frontend'
-        command: 'buildAndPush'
-        Dockerfile: '**/trainee_frontend'
-        tags: '$(Build.BuildNumber)'
+
+- job: frontend
+  steps:
+  - task: Docker@2
+    displayName: Frontend Docker image
+    inputs:
+      command: buildAndPush
+      Dockerfile: ./trainee_frontend/Dockerfile
+      repository: $(Build.RepositoryName)
+      tags: $(Build.BuildNumber)
+
+- job: backend
+  dependsOn: build
+  steps:
+  - task: Docker@2
+    displayName: Backend Docker image
+    inputs:
+      command: buildAndPush
+      Dockerfile: ./trainee_backend/Dockerfile
+      repository: $(Build.RepositoryName)
+      tags: $(Build.BuildNumber)
