@@ -9,7 +9,7 @@ jobs:
         command: 'login'
 
 - job: frontend
-dependsOn: login
+  dependsOn: login
   steps:
   - task: Docker@2
     displayName: Frontend Docker image
