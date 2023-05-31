@@ -20,14 +20,14 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'DockerHub'
-        repository: 'mern'
+        repository: 'mern-backend'
         command: 'buildAndPush'
         Dockerfile: '**/trainee_backend'
-        tags: '$(Build.BuildNumber) latest'
+        tags: '$(Build.BuildNumber)'
     - task: Docker@2
       inputs:
         containerRegistry: 'DockerHub'
-        repository: 'mern'
+        repository: 'mern-frontend'
         command: 'buildAndPush'
         Dockerfile: '**/trainee_frontend'
-        tags: '$(Build.BuildNumber) latest'
+        tags: '$(Build.BuildNumber)'
