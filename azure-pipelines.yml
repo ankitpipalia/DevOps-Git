@@ -15,8 +15,8 @@ jobs:
     displayName: Frontend Docker image
     inputs:
       command: buildAndPush
+      repository: babodesi/mern-frontend
       Dockerfile: '$(Build.SourcesDirectory)/trainee_frontend/Dockerfile'
-      repository: $(Build.RepositoryName)
       tags: $(Build.BuildNumber)
 
 - job: backend
@@ -27,5 +27,5 @@ jobs:
     inputs:
       command: buildAndPush
       Dockerfile: '$(Build.SourcesDirectory)/trainee_backend/Dockerfile'
-      repository: $(Build.RepositoryName)
+      repository: babodesi/mern-backend
       tags: $(Build.BuildNumber)
