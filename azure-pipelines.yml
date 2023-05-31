@@ -1,36 +1,28 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
-- master
+  branches:
+    include:
+      - main
 
-resources:
-- repo: self
+pool:
+  vmImage: 'ubuntu-latest'
 
 variables:
-  tag: '$(Build.BuildId)'
+  imageName: 'gujarat'
+  dockerHubRepository: 'babodesi'
+  dockerHubUsername: $(DOCKERHUB_USERNAME)
+  dockerHubPassword: $(DOCKERHUB_PASSWORD)
 
-stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/trainee_backend/Dockerfile'
-        tags: |
-          $(tag)
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/trainee_frontend/Dockerfile'
-        tags: |
-          $(tag)
+steps:
+- task: Docker@2
+  displayName: 'Build and push Docker image'
+  inputs:
+    command: 'buildAndPush'
+    containerRegistry: 'dockerHub'
+    repository: '$(dockerHubRepository)'
+    dockerfile: 'Dockerfile'
+    tags: |
+      $(Build.BuildNumber)
+      latest
+  env:
+    DOCKERHUB_USERNAME: $(dockerHubUsername)
+    DOCKERHUB_PASSWORD: $(dockerHubPassword)
