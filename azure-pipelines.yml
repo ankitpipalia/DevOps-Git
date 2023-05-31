@@ -1,15 +1,7 @@
 trigger:
 - master
 jobs:
-- job: login
-  steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'DockerHub'
-        command: 'login'
-
 - job: frontend
-  dependsOn: login
   steps:
   - task: Docker@2
     displayName: Frontend Docker image
