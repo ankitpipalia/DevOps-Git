@@ -10,7 +10,7 @@ jobs:
       command: buildAndPush
       Dockerfile: '$(Build.SourcesDirectory)/trainee_backend/Dockerfile'
       repository: babodesi/mern-backend
-      tags: $(Build.BuildNumber)
+      tags: babodesi/mern-backend:latest
       
 - job: frontend
   dependsOn: backend
@@ -21,4 +21,4 @@ jobs:
       command: buildAndPush
       repository: babodesi/mern-frontend
       Dockerfile: '$(Build.SourcesDirectory)/trainee_frontend/Dockerfile'
-      tags: $(Build.BuildNumber)
+      tags: babodesi/mern-frontend:latest
