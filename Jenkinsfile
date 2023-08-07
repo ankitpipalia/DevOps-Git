@@ -14,6 +14,8 @@ pipeline {
                 stage('Build Frontend') {
                     steps {
                         script {
+                            sh 'pwd'
+                            sh 'ls'
                             frontendBuildAndPush()
                         }
                     }
@@ -26,6 +28,8 @@ pipeline {
                 stage('Build Backend') {
                     steps {
                         script {
+                            sh 'pwd'
+                            sh 'ls'
                             backendBuildAndPush()
                         }
                     }
