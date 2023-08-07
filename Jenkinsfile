@@ -7,20 +7,6 @@ pipeline {
     }
 
     stages {
-    
-        stage('Build Frontend Docker Images') {
-            parallel {
-                stage('Build Frontend') {
-                    steps {
-                        script {
-                            sh 'pwd'
-                            sh 'ls'
-                            frontendBuildAndPush()
-                        }
-                    }
-                }
-            }
-        }
 
         stage('Build Backend Docker Images') {
             parallel {
@@ -30,6 +16,20 @@ pipeline {
                             sh 'pwd'
                             sh 'ls'
                             backendBuildAndPush()
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Build Frontend Docker Images') {
+            parallel {
+                stage('Build Frontend') {
+                    steps {
+                        script {
+                            sh 'pwd'
+                            sh 'ls'
+                            frontendBuildAndPush()
                         }
                     }
                 }
