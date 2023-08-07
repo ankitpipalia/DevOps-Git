@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY = 'docker.io'
-        DOCKER_HUB_USERNAME = credentials('docker-hub-username')
         DOCKER_HUB_PASSWORD = credentials('docker-hub-password')
     }
 
@@ -40,21 +39,21 @@ pipeline {
 }
 
 def frontendBuildAndPush() {
-    sh "docker build -f /var/lib/jenkins/workspace/MERN-Stack/trainee_frontend/Dockerfile -t ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-frontend:v${BUILD_NUMBER}"
-    sh "docker tag ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-frontend:v${BUILD_NUMBER} ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-frontend:latest"
+    sh "docker build -f /var/lib/jenkins/workspace/MERN-Stack/trainee_frontend/Dockerfile -t ${DOCKER_REGISTRY}/babodesi/mern-frontend:v${BUILD_NUMBER}"
+    sh "docker tag ${DOCKER_REGISTRY}/babodesi/mern-frontend:v${BUILD_NUMBER} ${DOCKER_REGISTRY}/babodesi/mern-frontend:latest"
     withDockerRegistry(credentialsId: 'docker-hub-credentials') {
-        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
-        sh "docker push ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-frontend:v${BUILD_NUMBER}"
-        sh "docker push ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-frontend:latest"
+        sh "docker login -u babodesi -p ${DOCKER_HUB_PASSWORD}"
+        sh "docker push ${DOCKER_REGISTRY}/babodesi/mern-frontend:v${BUILD_NUMBER}"
+        sh "docker push ${DOCKER_REGISTRY}/babodesi/mern-frontend:latest"
     }
 }
 
 def backendBuildAndPush() {
-    sh "docker build -f /var/lib/jenkins/workspace/MERN-Stack/trainee_backend/Dockerfile -t ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-backend:v${BUILD_NUMBER}"
-    sh "docker tag ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-backend:v${BUILD_NUMBER} ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-backend:latest"
+    sh "docker build -f /var/lib/jenkins/workspace/MERN-Stack/trainee_backend/Dockerfile -t ${DOCKER_REGISTRY}/babodesi/mern-backend:v${BUILD_NUMBER}"
+    sh "docker tag ${DOCKER_REGISTRY}/babodesi/mern-backend:v${BUILD_NUMBER} ${DOCKER_REGISTRY}/babodesi/mern-backend:latest"
     withDockerRegistry(credentialsId: 'docker-hub-credentials') {
-        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
-        sh "docker push ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-backend:v${BUILD_NUMBER}"
-        sh "docker push ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-backend:latest"
+        sh "docker login -u babodesi -p ${DOCKER_HUB_PASSWORD}"
+        sh "docker push ${DOCKER_REGISTRY}/babodesi/mern-backend:v${BUILD_NUMBER}"
+        sh "docker push ${DOCKER_REGISTRY}/babodesi/mern-backend:latest"
     }
 }
