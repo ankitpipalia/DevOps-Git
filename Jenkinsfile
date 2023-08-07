@@ -40,7 +40,7 @@ pipeline {
 }
 
 def frontendBuildAndPush() {
-    sh "docker build -f ./trainee_frontend/Dockerfile -t ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-frontend:v${BUILD_NUMBER}"
+    sh "docker build -f /var/lib/jenkins/workspace/MERN-Stack/trainee_frontend/Dockerfile -t ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-frontend:v${BUILD_NUMBER}"
     sh "docker tag ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-frontend:v${BUILD_NUMBER} ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-frontend:latest"
     withDockerRegistry(credentialsId: 'docker-hub-credentials') {
         sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
@@ -50,7 +50,7 @@ def frontendBuildAndPush() {
 }
 
 def backendBuildAndPush() {
-    sh "docker build -f ./trainee_backend/Dockerfile -t ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-backend:v${BUILD_NUMBER}"
+    sh "docker build -f /var/lib/jenkins/workspace/MERN-Stack/trainee_backend/Dockerfile -t ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-backend:v${BUILD_NUMBER}"
     sh "docker tag ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-backend:v${BUILD_NUMBER} ${DOCKER_REGISTRY}/${DOCKER_HUB_USERNAME}/mern-backend:latest"
     withDockerRegistry(credentialsId: 'docker-hub-credentials') {
         sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
