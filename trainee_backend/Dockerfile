@@ -6,7 +6,6 @@ RUN npm install
 COPY . .
 
 EXPOSE 5000
-
-RUN sonar-scanner
+RUN npm sonar
 
 ENTRYPOINT node index.js
