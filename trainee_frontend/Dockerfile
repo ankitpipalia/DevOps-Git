@@ -4,6 +4,7 @@ WORKDIR /frontend
 COPY . /frontend
 
 RUN npm install
+RUN sonar-scanner
 
 RUN npm run-script build
 

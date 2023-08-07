@@ -8,18 +8,6 @@ pipeline {
     }
 
     stages {
-
-        stage('frontend sonarqube') {
-            steps {
-                sh './trainee_frontend/sonar-scanner'
-            }
-        }
-
-        stage('backend sonarqube') {
-            steps {
-                sh './trainee_backend/sonar-scanner'
-            }
-        }
         
         stage('Build Frontend Docker Images') {
             parallel {

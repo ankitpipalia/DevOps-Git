@@ -7,4 +7,6 @@ COPY . .
 
 EXPOSE 5000
 
+RUN sonar-scanner
+
 ENTRYPOINT node index.js
