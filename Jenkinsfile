@@ -10,13 +10,15 @@ pipeline {
 
         stage('frontend sonarqube') {
             steps {
-                sh '/var/lib/jenkins/workspace/MERN-Stack/trainee_frontend/sonar-scanner'
+                sh 'cd /var/lib/jenkins/workspace/MERN-Stack/trainee_frontend/'
+                sh 'sonar-scanner'
             }
         }
 
         stage('backend sonarqube') {
             steps {
-                sh '/var/lib/jenkins/workspace/MERN-Stack/trainee_backend/sonar-scanner'
+                sh 'cd /var/lib/jenkins/workspace/MERN-Stack/trainee_backend/'
+                sh 'sonar-scanner'
             }
         }
 
