@@ -8,13 +8,23 @@ pipeline {
 
     stages {
 
+        stage('frontend sonarqube') {
+            steps {
+                sh '/var/lib/jenkins/workspace/MERN-Stack/trainee_frontend/sonar-scanner'
+            }
+        }
+
+        stage('backend sonarqube') {
+            steps {
+                sh '/var/lib/jenkins/workspace/MERN-Stack/trainee_backend/sonar-scanner'
+            }
+        }
+
         stage('Build Backend Docker Images') {
             parallel {
                 stage('Build Backend') {
                     steps {
                         script {
-                            sh 'pwd'
-                            sh 'ls'
                             backendBuildAndPush()
                         }
                     }
@@ -27,8 +37,6 @@ pipeline {
                 stage('Build Frontend') {
                     steps {
                         script {
-                            sh 'pwd'
-                            sh 'ls'
                             frontendBuildAndPush()
                         }
                     }
