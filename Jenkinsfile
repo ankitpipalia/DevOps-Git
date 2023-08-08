@@ -10,15 +10,14 @@ pipeline {
 
         stage('frontend sonarqube') {
             steps {
-                sh 'cd /var/lib/jenkins/workspace/MERN-Stack/trainee_frontend/'
-                sh 'sonar-scanner -Dsonar.login=squ_a8ec9779a12087125885263f7b93b15cdcabac7a'
+                sh 'sonar-scanner -Dsonar.projectSettings=/var/lib/jenkins/workspace/MERN-Stack/trainee_frontend/sonar-project.properties'
             }
         }
 
         stage('backend sonarqube') {
             steps {
                 sh 'cd /var/lib/jenkins/workspace/MERN-Stack/trainee_backend/'
-                sh 'sonar-scanner -Dsonar.login=squ_a8ec9779a12087125885263f7b93b15cdcabac7a'
+                sh 'sonar-scanner -X -Dsonar.login=squ_a8ec9779a12087125885263f7b93b15cdcabac7a'
             }
         }
 
