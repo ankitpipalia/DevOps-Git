@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: my-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: mern-backend
+          ports:
+            - containerPort: 4000
+          env:
+            - name: MONGODB_URL
+              value: "mongodb://mongodb:27017/mydb" # Update this with your actual MongoDB URL
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 4000
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: mern-backend
+          ports:
+            - containerPort: 4000
+          env:
+            - name: MONGODB_URL
+              value: mongodb://mongodb:27017
