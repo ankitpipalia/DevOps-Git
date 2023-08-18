@@ -4,7 +4,6 @@ WORKDIR /backend
 COPY package.json .
 RUN npm i
 COPY . .
-
-EXPOSE 5000
+EXPOSE 4000
 
 ENTRYPOINT node index.js

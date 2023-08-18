@@ -1,17 +1,17 @@
-version: "3.9"
+version: "3"
 services:
-  
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - 27017
+
   backend:
-    build: 
-      dockerfile: Dockerfile
-      context: ./trainee_backend/
+    image: babodesi/mern-backend
     container_name: backend
-    image: mern-backend:v1
-    
-  
-  frontend:
-    build:   
-      dockerfile: Dockerfile
-      context: ./trainee_frontend/
-    image: mern-frontend:v1
-    container_name: frontend
+    restart: always
+    ports:
+      - 4000:4000
+    depends_on:
+      - mongodb

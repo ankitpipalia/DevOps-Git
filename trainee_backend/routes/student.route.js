@@ -28,6 +28,10 @@ router.route('/').get((req, res) => {
   })
 })
 
+router.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 // Get Single Student
 router.route('/edit-student/:id').get((req, res) => {
   studentSchema.findById(req.params.id, (error, data) => {

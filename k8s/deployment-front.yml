@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: mern-frontend
+          image: babodesi/mern-frontend
           ports:
             - containerPort: 80

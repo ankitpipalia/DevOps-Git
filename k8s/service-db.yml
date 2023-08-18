@@ -4,10 +4,10 @@ metadata:
   name: mongodb
   namespace: my-app
 spec:
+  type: ClusterIP
   selector:
     app: mongodb
   ports:
     - protocol: TCP
       port: 27017
       targetPort: 27017
-  type: ClusterIP
