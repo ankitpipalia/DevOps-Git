@@ -29,7 +29,7 @@ ___
 ```
  - The MERN stack application will now be running in Docker containers. The frontend React application will be accessible at http://localhost in your web browser.
 ### Testing
- - You can run tests in the trainee_backend directory by accessing the backend container and running the tests inside the container. Follow these steps:
+ - You can run tests in the backend directory by accessing the backend container and running the tests inside the container. Follow these steps:
  - Access the backend container using Docker Compose.
 ``` 
    docker-compose exec backend bash
